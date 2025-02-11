@@ -1,4 +1,4 @@
-Sjasm Z80 Assembler v0.42c - www.xl2s.tk             [2025.02.11 - 20:01:58]
+Sjasm Z80 Assembler v0.42c - www.xl2s.tk             [2025.02.11 - 21:22:04]
 
 /Users/rafaellopezverdejo/Documents/proyectosMSX/asm/genroms/src/rom32.asm
 Errors: 0
@@ -10,12 +10,15 @@ Errors: 0
        5   00:0000                      ;* Fecha: 11/02/2025
        6   00:0000                      ;* Autor: Rafael López "Orion"
        7   00:0000                      ;* Email: orion@orionmsx.com
-       8   00:0000                      ;*
-       9   00:0000                      ;*********************************************************************
-      10   00:0000                      
-      11   00:0000                      	output "out/rom32.rom"
-      12   00:4000                      
-      13   00:4000                          include "constantes.asm"
+       8   00:0000                      ;* Créditos:
+       9   00:0000                      ;*  - Rutina para acceder a los segundos 16 KB de la ROM -> Ramones
+      10   00:0000                      ;*  - Ejemplo y explicaciones que me enseñaron esto -> Fernando García
+      11   00:0000                      ;*
+      12   00:0000                      ;*********************************************************************
+      13   00:0000                      
+      14   00:0000                      	output "out/rom32.rom"
+      15   00:4000                      
+      16   00:4000                          include "constantes.asm"
        1.  00:4000                      ;****************
        2.  00:4000                      ; SERVICIOS BIOS
        3.  00:4000                      ;****************
@@ -110,37 +113,37 @@ Errors: 0
       92.  00:4000                      ;*************
       93.  00:4000                      
       94.  00:4000  (00:003C)           MAX_CONTADOR_VBLANKS    equ 60  ;número de vblanks por cada segundo
-      14   00:4000                      
-      15   00:4000                      ;********************************************
-      16   00:4000                      ; Página 0 del cartucho, Página 1 de memoria
-      17   00:4000                      ; 0x4000 a 0x7FFF = 16 KB
+      17   00:4000                      
       18   00:4000                      ;********************************************
-      19   00:4000                      
-      20   00:4000                      	org	#4000
-      21   00:4000                      
-      22   00:4000                      ;**************
-      23   00:4000                      ; CABECERA ROM
-      24   00:4000                      ;**************
-      25   00:4000                      								
-      26   00:4000  41 42               	db "AB"
-      27   00:4002  10 40               	dw BEGIN
-      28   00:4004                      	dw 0,0,0,0,0,0
-      28   00:4004  00 00 00 00 00 00 00 00 00 00 00 00 
-      29   00:4010                      
-      30   00:4010                      
-      31   00:4010                      ;*********************
-      32   00:4010                      ; INICIO DEL PROGRAMA
-      33   00:4010                      ;*********************
-      34   00:4010                      
-      35   00:4010                      BEGIN:
-      36   00:4010                      
-      37   00:4010  F3                      di
-      38   00:4011  ED 56                   im 1                            ;interrupciones en modo 1
-      39   00:4013  31 80 F3                ld sp,0xF380                    ;posicionamos la pila
-      40   00:4016  CD 2C 40                call search_slotset             ;ubicamos la página 1 del cartucho en la página 2 de memoria
-      41   00:4019  FB                      ei
-      42   00:401A                      
-      43   00:401A                          include "ejemplo.asm"
+      19   00:4000                      ; Página 0 del cartucho, Página 1 de memoria
+      20   00:4000                      ; 0x4000 a 0x7FFF = 16 KB
+      21   00:4000                      ;********************************************
+      22   00:4000                      
+      23   00:4000                      	org	#4000
+      24   00:4000                      
+      25   00:4000                      ;**************
+      26   00:4000                      ; CABECERA ROM
+      27   00:4000                      ;**************
+      28   00:4000                      								
+      29   00:4000  41 42               	db "AB"
+      30   00:4002  10 40               	dw BEGIN
+      31   00:4004                      	dw 0,0,0,0,0,0
+      31   00:4004  00 00 00 00 00 00 00 00 00 00 00 00 
+      32   00:4010                      
+      33   00:4010                      
+      34   00:4010                      ;*********************
+      35   00:4010                      ; INICIO DEL PROGRAMA
+      36   00:4010                      ;*********************
+      37   00:4010                      
+      38   00:4010                      BEGIN:
+      39   00:4010                      
+      40   00:4010  F3                      di
+      41   00:4011  ED 56                   im 1                            ;interrupciones en modo 1
+      42   00:4013  31 80 F3                ld sp,0xF380                    ;posicionamos la pila
+      43   00:4016  CD 2C 40                call search_slotset             ;ubicamos la página 1 del cartucho en la página 2 de memoria
+      44   00:4019  FB                      ei
+      45   00:401A                      
+      46   00:401A                          include "ejemplo.asm"
        1.  00:401A                          ;screen 0
        2.  00:401A  AF                  	xor a
        3.  00:401B  CD 5F 00            	call CHGMOD
@@ -148,12 +151,12 @@ Errors: 0
        5.  00:401E                          ;escribimos mensaje en pantalla
        6.  00:401E  01 27 00                ld bc,string_fin-string
        7.  00:4021  11 00 00            	ld de,0
-       8.  00:4024  21 FF 7F            	ld hl,string
+       8.  00:4024  21 00 80            	ld hl,string
        9.  00:4027  CD 5C 00            	call LDIRVM
       10.  00:402A                      
       11.  00:402A                          ;bucle infinito
       12.  00:402A  18 FE                   jr $
-      44   00:402C                          include "fgenericas.asm"
+      47   00:402C                          include "fgenericas.asm"
        1.  00:402C                      ;original from Ramones (http://karoshi.auic.es/index.php?topic=628.0)
        2.  00:402C                      ;nueva URL http://karoshi.auic.es/karoshi.auic.es/index.php/topic%2c628.0.html
        3.  00:402C                      ; -----------------------
@@ -196,25 +199,25 @@ Errors: 0
       40.  00:404D  26 80               	ld h,080h
       41.  00:404F  32 00 C0            	ld (SLOTVAR),a
       42.  00:4052  C9                  	ret	
-      45   00:4053                      
-      46   00:4053                          ;relleno hasta fin de página
-      47   00:4053  00 (16300)              ds #7FFF-$
-      48   00:7FFF                      
-      49   00:7FFF                      ;********************************************
-      50   00:7FFF                      ; Página 1 del cartucho, Página 2 de memoria
-      51   00:7FFF                      ; 0x8000 a 0xC000 = 16 KB
-      52   00:7FFF                      ;********************************************
-      53   00:7FFF                      
-      54   00:7FFF                          include "variables.asm"
-       1.  00:7FFF                      string:		
-       2.  00:7FFF                      	db "Hemos conseguido hacer una ROM de 32 KB"
-       2.  00:7FFF  48 65 6D 6F 73 20 63 6F 6E 73 65 67 75 69 64 6F 
-       2.  00:800F  20 68 61 63 65 72 20 75 6E 61 20 52 4F 4D 20 64 
-       2.  00:801F  65 20 33 32 20 4B 42 
-       3.  00:8026                      string_fin:
-      55   00:8026                      
-      56   00:8026                          ;relleno hasta fin de página
-      57   00:8026  00 (16346)              ds #C000-$
+      48   00:4053                      
+      49   00:4053                          ;relleno hasta fin de página
+      50   00:4053  00 (16301)              ds #8000-$
+      51   00:8000                      
+      52   00:8000                      ;********************************************
+      53   00:8000                      ; Página 1 del cartucho, Página 2 de memoria
+      54   00:8000                      ; 0x8000 a 0xC000 = 16 KB
+      55   00:8000                      ;********************************************
+      56   00:8000                      
+      57   00:8000                          include "variables.asm"
+       1.  00:8000                      string:		
+       2.  00:8000                      	db "Hemos conseguido hacer una ROM de 32 KB"
+       2.  00:8000  48 65 6D 6F 73 20 63 6F 6E 73 65 67 75 69 64 6F 
+       2.  00:8010  20 68 61 63 65 72 20 75 6E 61 20 52 4F 4D 20 64 
+       2.  00:8020  65 20 33 32 20 4B 42 
+       3.  00:8027                      string_fin:
+      58   00:8027                      
+      59   00:8027                          ;relleno hasta fin de página
+      60   00:8027  00 (16345)              ds #C000-$
 
     LABELS
 -------------------------------------------------
@@ -284,8 +287,8 @@ Errors: 0
 00:00004010   BEGIN
 00:0000402C   search_slotset
 00:00004032   search_slot
-00:00007FFF   string
-00:00008026   string_fin
+00:00008000   string
+00:00008027   string_fin
 
 
  Output: out/rom32

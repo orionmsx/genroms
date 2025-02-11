@@ -47,11 +47,11 @@ BEGIN:
     include "fgenericas.asm"
 
     ;relleno hasta fin de página
-    ds #7FFF-$
+    ds #8000-$
 
 ;********************************************
 ; Página 1 del cartucho, Página 2 de memoria
-; 0x8000 a 0xC000 = 16 KB
+; 0x8000 a 0xBFFF = 16 KB
 ;********************************************
 
     include "variables.asm"

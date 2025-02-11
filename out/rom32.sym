@@ -64,5 +64,5 @@ MAX_CONTADOR_VBLANKS: equ 0000003Ch
 BEGIN: equ 00004010h
 search_slotset: equ 0000402Ch
 search_slot: equ 00004032h
-string: equ 00007FFFh
-string_fin: equ 00008026h
+string: equ 00008000h
+string_fin: equ 00008027h

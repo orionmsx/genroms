@@ -1,0 +1,126 @@
+{
+    // See https://go.microsoft.com/fwlink/?Link...
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Experimental BIN",
+            "type": "shell",
+            "command": "/Users/rafaellopezverdejo/Documents/OpenMSX/Dev/build.sh",
+            "args": [
+                "${file}",
+//                "${fileDirname}",
+                "${workspaceFolder}/out",
+                "${fileBasenameNoExtension}",
+                "bin"
+            ],
+            "problemMatcher": {
+                "owner": "sjasm",
+                "fileLocation": [
+                    "relative",
+                    "/"
+                ],
+                "pattern": {
+                    "regexp": "^(.+/.+)(\\()(\\d+)(\\)\\s\\:\\s)(.+)$",
+                    "file": 1,
+                    "line": 3,
+                    "message": 5
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": false,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true,
+                "revealProblems": "onProblem"
+            }
+        },
+        {
+            "label": "Experimental BIN sólo compilar",
+            "type": "shell",
+            "command": "/Applications/sjasm-042fx -s ${file} out/${fileBasenameNoExtension}",
+            "problemMatcher": {
+                "owner": "sjasm",
+                "fileLocation": [
+                    "relative",
+                    "/"
+                ],
+                "pattern": {
+                    "regexp": "^(.+/.+)(\\()(\\d+)(\\)\\s\\:\\s)(.+)$",
+                    "file": 1,
+                    "line": 3,
+                    "message": 5
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Experimental ROM",
+            "type": "shell",
+            "command": "/Users/rafaellopezverdejo/Documents/OpenMSX/Dev/build.sh",
+            "args": [
+                "${file}",
+//                "${fileDirname}",
+                "${workspaceFolder}/out",
+                "${fileBasenameNoExtension}",
+                "rom"
+            ],
+            "problemMatcher": {
+                "owner": "sjasm",
+                "fileLocation": [
+                    "relative",
+                    "/"
+                ],
+                "pattern": {
+                    "regexp": "^(.+/.+)(\\()(\\d+)(\\)\\s\\:\\s)(.+)$",
+                    "file": 1,
+                    "line": 3,
+                    "message": 5
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "MDL",
+            "type": "shell",
+            "command": "java -jar /usr/local/bin/mdl.jar ${file} -po -dialect sjasm",
+            "group": "build",
+            "problemMatcher": {
+                "applyTo": "allDocuments",
+                "fileLocation": [
+                    "autoDetect",
+                    "${workspaceFolder}"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(\\w+): (.+) in (.+)#([0-9]+): (.+)$",
+                        "file": 3,
+                        "line": 4,
+                        "severity": 1,
+                        "message": 5,
+                        "code": 2
+                    }
+                ]
+            },
+            "presentation": {
+                "echo": false,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true,
+                "revealProblems": "onProblem"
+            }
+        }
+    ]
+}

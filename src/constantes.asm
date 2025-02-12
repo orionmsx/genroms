@@ -47,8 +47,8 @@ STATFL 	equ	#F3E7
 ; DIRECCIONES IMPORTANTES
 ;*************************
 
-HTIMI	equ #FD9F   ;dirección de la ISR original del sistema
-SLOTVAR equ #c000
+HTIMI	equ #FD9F   ;dirección de la ISR original del sistema para el VDP
+SLOTVAR equ #c000   ;dirección donde almacena el slotvar la rutina de Ramones
 
 ;******************
 ; DIRECCIONES VRAM
